@@ -1,0 +1,61 @@
+package company;
+import java.util.Scanner;
+public class Primos {
+    // Generar números primos de 1 a max
+    public static int[] generarPrimos (int max) {
+        int i,j;
+        if (max >= 2) {
+            // Declaraciones
+            int dim = max + 1; // Tamaño del array
+            // Inicializar el array
+            boolean[] esPrimo = inicializaArray(dim);
+            // Eliminar el 0 y el 1, que no son primos
+            esPrimo[0] = esPrimo[1] = false;
+            // Criba
+           criba(esPrimo,dim);
+            // ¿Cuántos primos hay?
+            int cuenta = cuenta(esPrimo,dim);
+            // Rellenar el vector de números primos
+            return rellaPrimos(esPrimo,dim,cuenta);
+        }
+        else { // max < 2
+            return new int[0];
+            // Vector vacío
+        }
+    }
+    static boolean[] criba(boolean[] esPrimo, int dim){
+     for (int i=2; i<Math.sqrt(dim)+1; i++) {
+        if (esPrimo[i]) {
+            // Eliminar los múltiplos de i
+            for (int j = 2 * i; j < dim; j += i) {
+                esPrimo[j] = false;
+            }
+        }}
+     return esPrimo;
+    }
+    static int cuenta(boolean[] esPrimo, int dim){
+        int cuenta = 0;
+        for (int i=0; i<dim; i++) {
+            if (esPrimo[i]) {
+                cuenta++;
+            }
+        }
+        return cuenta;
+    }
+    static boolean[] inicializaArray(int dim){
+        boolean[] esPrimo = new boolean[dim];
+        for (int i=0; i<dim; i++) {
+            esPrimo[i] = true;
+        }
+        return esPrimo;
+    }
+    static int[] rellaPrimos(boolean[] esPrimo, int dim, int cuenta){
+        int[] primos = new int[cuenta];
+        for (int i=0, j=0; i<dim; i++) {
+            if (esPrimo[i]) {
+                primos[j++] = i;
+            }
+        }
+        return primos;
+    }
+}
